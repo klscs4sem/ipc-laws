@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive IPC Laws</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom, #3b8d99, #6bbaa7);
+            color: #fff;
+        }
+        header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        header h1 {
+            font-size: 3rem;
+            animation: fadeIn 2s;
+        }
+        .intro {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 2rem;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s;
+        }
+        .intro h2 {
+            font-size: 2rem;
+            color: #ffde59;
+            margin-bottom: 1rem;
+        }
+        .intro p {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 0.5rem 0;
+        }
+        .law-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+        }
+        .law-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background 0.3s;
+        }
+        .law-item:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            width: 80%;
+            max-width: 500px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            animation: slideDown 0.5s ease-out;
+            z-index: 100;
+        }
+        .modal.active {
+            display: block;
+        }
+        .modal h2 {
+            color: #3b8d99;
+        }
+        .modal p {
+            margin: 1rem 0;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            bottom: 0;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -60%);
+            }
+            to {
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Interactive IPC Laws (Sections 85-96)</h1>
+    </header>
+
+    <!-- Introduction Section -->
+    <div class="intro">
+        <h2>Introduction to the IPC Laws</h2>
+        <p>The Indian Penal Code (IPC) serves as the fundamental legal framework in India for establishing criminal liability related to specified offenses and setting exceptions to criminal liability for these offenses.  It applies to all Indian citizens and individuals of Indian origin, regardless of location. The IPC is organized into 23 chapters and consists of 511 sections.</p>
+        <p>Explore each section below to understand its legal interpretation, purpose, and associated consequences.</p>
+    </div>
+
+    <!-- Law Grid -->
+    <div class="law-grid">
+        <div class="law-item" onclick="openModal(85)">Section 85</div>
+        <div class="law-item" onclick="openModal(86)">Section 86</div>
+        <div class="law-item" onclick="openModal(87)">Section 87</div>
+        <div class="law-item" onclick="openModal(88)">Section 88</div>
+        <div class="law-item" onclick="openModal(89)">Section 89</div>
+        <div class="law-item" onclick="openModal(90)">Section 90</div>
+        <div class="law-item" onclick="openModal(91)">Section 91</div>
+        <div class="law-item" onclick="openModal(92)">Section 92</div>
+        <div class="law-item" onclick="openModal(93)">Section 93</div>
+        <div class="law-item" onclick="openModal(94)">Section 94</div>
+        <div class="law-item" onclick="openModal(95)">Section 95</div>
+        <div class="law-item" onclick="openModal(96)">Section 96</div>
+    </div>
+
+    <!-- Modal Pop-Up -->
+    <div class="modal" id="modal">
+        <button class="close-btn" onclick="closeModal()">×</button>
+        <h2 id="modal-title"></h2>
+        <p><strong>What is the law?</strong> <span id="law-description"></span></p>
+        <p><strong>Why are they imposed?</strong> <span id="law-reason"></span></p>
+        <p><strong>What punishment is involved?</strong> <span id="law-punishment"></span></p>
+    </div>
+
+    <footer>
+        <p>© 2024 IPC Law Guide</p>
+    </footer>
+
+    <script>
+        const laws = {
+            85: {
+                title: "Section 85: Act of a person incapable of judgment by reason of intoxication caused against his will.",
+                description: "This section states that if a person commits an offense while intoxicated and the intoxication was caused without their knowledge or against their will, they are not held liable for their actions.",
+                reason: "To protect individuals from being held criminally liable if their intoxicated state was involuntary.",
+                punishment: "No punishment if intoxication was involuntary."
+            },
+            86: {
+                title: "Section 86: Offence requiring a particular intent or knowledge committed by one who is intoxicated.",
+                description: "If an offense is committed by an intoxicated person who voluntarily consumed the intoxicant, they are liable as if they had the intent or knowledge required for that offense, except in cases where the offense requires special knowledge. ",
+                reason: "To ensure that individuals remain responsible for crimes committed under voluntary intoxication, except where specific intent or knowledge is needed.",
+                punishment: "Same as for the offense committed, depending on its nature, as intoxication does not excuse voluntary criminal acts."
+            },
+            87: {
+                title: "Section 87: Act not intended and not known to be likely to cause death or grievous hurt, done by consent.",
+                description: "Acts done with the consent of the victim, which are not intended to cause death or grievous hurt, are not punishable, as long as the victim is above 18 years of age.",
+                reason: "To allow consensual acts between adults where there is no intent to cause serious harm or death.",
+                punishment: "No punishment if the act is consensual and does not cause grievous harm."
+            },
+            88: {
+                title: "Section 88: Act not intended to cause death, done by consent in good faith for person's benefit.",
+                description: "An act done in good faith for the benefit of a person (such as medical treatment), with their consent, is not punishable, even if it results in death or harm.",
+                reason: "To protect doctors, caregivers, or others acting in good faith for the benefit of another person.",
+                punishment: "No punishment if the act was done with consent and in good faith for the person's benefit."
+            },
+            89: {
+                title: "Section 89: Act done in good faith for benefit of child by consent of guardian",
+                description: "This section allows for acts done in good faith for the benefit of a child or an insane person, with the consent of their guardian, even if harm results.",
+                reason: "To protect those caring for children or mentally incapacitated persons when acting in their best interest.",
+                punishment: "No punishment if the act is done in good faith and with consent from a guardian."
+            },
+            90: {
+                title: "Section 90: Consent known to be given under fear or misconception.",
+                description: "Consent given under fear, misconception is not considered valid under the law.",
+                reason: "To ensure that only free and informed consent is legally recognized and to prevent exploitation.",
+                punishment: "Punishment is based on the nature of the offense, as acts committed without valid consent can lead to penalties as prescribed for the specific crime."
+            },
+            91: {
+                title: "Section 91: Exclusion of acts which are offences independently of harm cause.",
+                description: "Even if an act is done with the victim's consent, it is punishable if the act itself is an offense under the law (e.g., murder or intentionally  hurt).",
+                reason: "To ensure that consent does not excuse inherently criminal acts.",
+                punishment: "Punishment as per the offense committed, irrespective of consent."
+            },
+            92: {
+                title: "Section 92: Act done in good faith for benefit of a person without consent",
+                description: "Acts done in good faith for the benefit of a person without their consent (e.g., in an emergency situation) are not punishable, provided they are done to prevent harm and not to cause death.",
+                reason: "To allow life-saving actions without consent when obtaining consent is impossible.",
+                punishment: "No punishment if the act was done in good faith and without the intent to cause death."
+            },
+            93: {
+                title: "Section 93: Communication made in good faith.",
+                description: "Communications made in good faith for the benefit of another person, even if harmful to them (e.g., harsh criticism or advice), are not punishable.",
+                reason: "To protect individuals giving honest feedback, advice, or warnings, which may be necessary for the person's well-being.",
+                punishment: "No punishment if the communication is made in good faith."
+            },
+            94: {
+                title: "Section 94: Act to which a person is compelled by threats.",
+                description: "Person is not held liable for an act done under threat of instant death, except for murder and offenses against the state.",
+                reason: "To excuse actions committed under extreme duress or threats of death, except for severe crimes like murder. ",
+                punishment: "No punishment if the act was done under threat of death, except for murder and other grave crimes."
+            },
+            95: {
+                title: "Section 95: Act causing slight harm.",
+                description: "A person is not liable for an act that causes slight harm, as long as it was not done with malicious intent.",
+                reason: "To prevent trivial actions or minor harm from being criminally prosecuted.",
+                punishment: "No punishment for acts causing minor, insignificant harm."
+            },
+            96: {
+                title: "Section 96: Things done in private defense ",
+                description: "This section provides that nothing is an offense if done in the exercise of the right of private defense.",
+                reason: "To protect individuals acting in self-defense or in defense of others from criminal liability.",
+                punishment: "No punishment if the act is proven to be in private defense."
+            }
+        };
+
+        function openModal(section) {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            document.getElementById('modal-title').innerText = laws[section].title;
+            document.getElementById('law-description').innerText = laws[section].description;
+            document.getElementById('law-reason').innerText = laws[section].reason;
+            document.getElementById('law-punishment').innerText = laws[section].punishment;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
